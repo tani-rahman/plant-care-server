@@ -33,20 +33,20 @@ async function run() {
       res.send(result);
     });
 
-    // GET single plant (global)
+   
     app.get('/plants/:id', async (req, res) => {
       const id = req.params.id;
       const plant = await plantCollection.findOne({ _id: new ObjectId(id) });
       plant ? res.send(plant) : res.status(404).send({ message: "Not found" });
     });
 
-    // POST new plant to global
+  
     app.post('/plants', async (req, res) => {
       const result = await plantCollection.insertOne(req.body);
       res.send(result);
     });
 
-    // PUT update global plant (optional, for admins)
+   
     app.put('/plants/:id', async (req, res) => {
       const result = await plantCollection.updateOne(
         { _id: new ObjectId(req.params.id) },
@@ -56,25 +56,29 @@ async function run() {
       res.send(result);
     });
 
-    // POST to MyPlants
+  
+    
     app.post('/myPlants', async (req, res) => {
       const result = await myPlantCollection.insertOne(req.body);
       res.send(result);
     });
 
-    // GET all MyPlants
+   
+    
     app.get('/myPlants', async (req, res) => {
       const result = await myPlantCollection.find().toArray();
       res.send(result);
     });
 
-    // GET single MyPlant
+   
+    
     app.get('/myPlants/:id', async (req, res) => {
       const result = await myPlantCollection.findOne({ _id: new ObjectId(req.params.id) });
       result ? res.send(result) : res.status(404).send({ message: "Not found" });
     });
 
-    // PUT update MyPlant (✅ important)
+    
+    
     app.put('/myPlants/:id', async (req, res) => {
       const result = await myPlantCollection.updateOne(
         { _id: new ObjectId(req.params.id) },
@@ -84,7 +88,8 @@ async function run() {
       res.send(result);
     });
 
-    // DELETE from MyPlants
+   
+    
     app.delete('/myPlants/:id', async (req, res) => {
       const result = await myPlantCollection.deleteOne({ _id: new ObjectId(req.params.id) });
       res.send(result);
@@ -92,7 +97,7 @@ async function run() {
 
 
 
-    // User related APIs
+    // User api
         app.get('/users', async (req, res) => {
             const result = await usersCollection.find().toArray();
             res.send(result);
@@ -130,7 +135,7 @@ async function run() {
     await client.db("admin").command({ ping: 1 });
     console.log("Connected to MongoDB");
   } finally {
-    // Keeping DB connection open
+  
   }
 }
 
